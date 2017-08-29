@@ -1,0 +1,21 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "extends": "standard",
+    "rules": {
+        "no-unused-vars": "off"
+    },
+    "plugins": [
+        "react"
+    ]
+}
