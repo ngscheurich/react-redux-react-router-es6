@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as courseActions from '../../actions/courseActions'
 
 class CoursesPage extends React.Component {
   constructor (props, context) {
@@ -9,38 +12,68 @@ class CoursesPage extends React.Component {
     }
 
     this.onTitleChange = this.onTitleChange.bind(this)
-    this.onClickSave = this.onClickSave.bind(this)
+    this.onSaveCourse = this.onSaveCourse.bind(this)
   }
 
-  onTitleChange (event) {
+  onTitleChange (e) {
     let course = this.state.course
-    course.title = event.target.value
+    course.title = e.target.value
     this.setState({ course: course })
   }
 
-  onClickSave () {
-    console.log(`Saving ${this.state.course.title}`)
+  onSaveCourse (e) {
+    e.preventDefault()
+    this.props.actions.createCourse(this.state.course)
+    this.state.course.title = ''
+  }
+
+  courseRow (course, i) {
+    return <div key={i}>{course.title}</div>
   }
 
   render () {
     return (
-      <div className="container-fluid mt-4">
+      <div className="container-fluid pt-4">
         <h1>Courses</h1>
 
-        <input
-          placeholder="Add course"
-          className="form-control"
-          type="text"
-          onChange={this.onTitleChange}
-          value={this.state.course.title} />
-        <input
-          className="btn btn-primary"
-          type="submit"
-          onClick={this.onClickSave}
-          value="Save" />
+        <form className="mb-3" onSubmit={this.onSaveCourse}>
+          <div className="form-row align-items-center">
+            <div className="col-auto">
+              <input
+                placeholder="Add course"
+                className="form-control"
+                type="text"
+                onChange={this.onTitleChange}
+                value={this.state.course.title} />
+            </div>
+            <div className="col-auto">
+              <input
+                className="btn btn-primary"
+                type="submit"
+                value="Save" />
+            </div>
+          </div>
+        </form>
+
+        {this.props.courses.map(this.courseRow)}
       </div>
     )
   }
 }
 
-export default CoursesPage
+CoursesPage.propTypes = {
+  courses: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
+}
+
+function mapStateToProps (state, ownProps) {
+  return { courses: state.courses }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(courseActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage)

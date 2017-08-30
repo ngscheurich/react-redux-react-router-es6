@@ -3,7 +3,7 @@ import React from 'react'
 class AboutPage extends React.Component {
   render () {
     return (
-      <div className="container-fluid mt-4">
+      <div className="container-fluid pt-4">
         <h1>About</h1>
         <p>
           This application uses React, Redux, React Router
