@@ -2,31 +2,9 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as courseActions from '../../actions/courseActions'
+import CourseList from './CourseList'
 
 class CoursesPage extends React.Component {
-  constructor (props, context) {
-    super(props, context)
-
-    this.state = {
-      course: { title: '' }
-    }
-
-    this.onTitleChange = this.onTitleChange.bind(this)
-    this.onSaveCourse = this.onSaveCourse.bind(this)
-  }
-
-  onTitleChange (e) {
-    let course = this.state.course
-    course.title = e.target.value
-    this.setState({ course: course })
-  }
-
-  onSaveCourse (e) {
-    e.preventDefault()
-    this.props.actions.createCourse(this.state.course)
-    this.state.course.title = ''
-  }
-
   courseRow (course, i) {
     return <div key={i}>{course.title}</div>
   }
@@ -34,28 +12,8 @@ class CoursesPage extends React.Component {
   render () {
     return (
       <div className="container-fluid pt-4">
-        <h1>Courses</h1>
-
-        <form className="mb-3" onSubmit={this.onSaveCourse}>
-          <div className="form-row align-items-center">
-            <div className="col-auto">
-              <input
-                placeholder="Add course"
-                className="form-control"
-                type="text"
-                onChange={this.onTitleChange}
-                value={this.state.course.title} />
-            </div>
-            <div className="col-auto">
-              <input
-                className="btn btn-primary"
-                type="submit"
-                value="Save" />
-            </div>
-          </div>
-        </form>
-
-        {this.props.courses.map(this.courseRow)}
+        <h1 className="mb-3">Courses</h1>
+        <CourseList courses={this.props.courses} />
       </div>
     )
   }
