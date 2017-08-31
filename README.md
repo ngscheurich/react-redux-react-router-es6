@@ -4,3 +4,6 @@ This is a React + Redux project that I will be updating as I follow along with t
 
 This project strays somewhat from the course in terms of initial setup, visual design, and my personal preferences regarding code style. Some newer library versions are also used.
 
+---
+
+App navbar icon is from [Material icons](https://material.io/icons/) by Google.
