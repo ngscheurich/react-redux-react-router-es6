@@ -5,10 +5,13 @@ import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
 import routes from './routes'
 import { loadCourses } from './actions/courseActions'
+import { loadAuthors } from './actions/authorActions'
 import 'bootstrap/dist/css/bootstrap.css'
+import 'toastr/build/toastr.css'
 
 let store = configureStore()
 store.dispatch(loadCourses())
+store.dispatch(loadAuthors())
 
 render(
   <Provider store={store}>
